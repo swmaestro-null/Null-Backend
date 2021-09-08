@@ -9,10 +9,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import swmaestronull.nullbackend.jwt.JwtAccessDeniedHandler;
-import swmaestronull.nullbackend.jwt.JwtAuthenticationEntryPoint;
-import swmaestronull.nullbackend.jwt.JwtSecurityConfig;
-import swmaestronull.nullbackend.jwt.TokenProvider;
+import swmaestronull.nullbackend.auth.JwtAccessDeniedHandler;
+import swmaestronull.nullbackend.auth.JwtAuthenticationEntryPoint;
+import swmaestronull.nullbackend.auth.JwtSecurityConfig;
+import swmaestronull.nullbackend.auth.TokenProvider;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -66,9 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests() // HttpServletRequest를 사용하는 요청에 대한 접근제한 설정
-                .antMatchers("/api/hello").permitAll() // 인증 없이 접근을 허용
-                .antMatchers("/api/authenticate").permitAll() // 인증 없이 접근을 허용
-                .antMatchers("/api/signup").permitAll() // 인증 없이 접근을 허용
+                .antMatchers("/api/v1/authenticate").permitAll() // 인증 없이 접근을 허용
+                .antMatchers("/api/v1/signup").permitAll() // 인증 없이 접근을 허용
                 .anyRequest().authenticated() // 나머지 요청에 대해서는 인증을 받음
 
                 .and()

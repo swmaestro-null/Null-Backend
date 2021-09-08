@@ -1,4 +1,4 @@
-package swmaestronull.nullbackend.jwt;
+package swmaestronull.nullbackend.auth;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

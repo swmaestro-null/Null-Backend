@@ -1,4 +1,4 @@
-package swmaestronull.nullbackend.jwt;
+package swmaestronull.nullbackend.auth;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
