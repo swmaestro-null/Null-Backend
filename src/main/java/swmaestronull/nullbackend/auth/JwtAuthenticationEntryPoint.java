@@ -1,4 +1,4 @@
-package swmaestronull.nullbackend.jwt;
+package swmaestronull.nullbackend.auth;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

@@ -1,4 +1,4 @@
-package swmaestronull.nullbackend.jwt;
+package swmaestronull.nullbackend.auth;
 
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

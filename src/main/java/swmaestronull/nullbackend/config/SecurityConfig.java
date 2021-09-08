@@ -9,10 +9,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import swmaestronull.nullbackend.jwt.JwtAccessDeniedHandler;
-import swmaestronull.nullbackend.jwt.JwtAuthenticationEntryPoint;
-import swmaestronull.nullbackend.jwt.JwtSecurityConfig;
-import swmaestronull.nullbackend.jwt.TokenProvider;
+import swmaestronull.nullbackend.auth.JwtAccessDeniedHandler;
+import swmaestronull.nullbackend.auth.JwtAuthenticationEntryPoint;
+import swmaestronull.nullbackend.auth.JwtSecurityConfig;
+import swmaestronull.nullbackend.auth.TokenProvider;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
