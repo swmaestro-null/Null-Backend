@@ -5,8 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
 @NoArgsConstructor
 public class TokenDto {
+
     private String token;
+
+    @Builder
+    public TokenDto(String token) {
+        this.token = token;
+    }
 }

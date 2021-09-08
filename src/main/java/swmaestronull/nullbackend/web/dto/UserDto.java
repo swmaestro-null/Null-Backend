@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import swmaestronull.nullbackend.domain.user.User;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
-@Builder
 @NoArgsConstructor
 public class UserDto {
 
@@ -25,4 +25,11 @@ public class UserDto {
     @NotNull
     @Size(min = 3, max = 50)
     private String nickname;
+
+    @Builder
+    public UserDto(User entity) {
+        this.email = entity.getEmail();
+        this.password = entity.getPassword();
+        this.nickname = entity.getNickname();
+    }
 }
