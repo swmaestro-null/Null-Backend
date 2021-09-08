@@ -13,15 +13,15 @@ public class LoginDto {
 
     @NotNull
     @Size(min = 3, max = 50)
-    private String email;
+    private String username;
 
     @NotNull
     @Size(min = 7, max = 100)
     private String password;
 
     @Builder
-    public LoginDto(String email, String password) {
-        this.email = email;
+    public LoginDto(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 }

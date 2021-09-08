@@ -25,7 +25,7 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(length = 50, nullable = false, unique = true)
-    private String email;
+    private String username;
 
     @JsonIgnore
     @Column(length = 100, nullable = false)
@@ -42,8 +42,8 @@ public class User implements UserDetails {
     private List<String> roles = new ArrayList<>();
 
     @Builder
-    public User(String email, String password, String nickname, boolean activated, List<String> roles) {
-        this.email = email;
+    public User(String username, String password, String nickname, boolean activated, List<String> roles) {
+        this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.activated = activated;
@@ -59,7 +59,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
