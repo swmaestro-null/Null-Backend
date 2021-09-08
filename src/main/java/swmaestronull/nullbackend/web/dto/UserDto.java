@@ -15,7 +15,7 @@ public class UserDto {
 
     @NotNull
     @Size(min = 3, max = 50)
-    private String email;
+    private String username;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
@@ -28,7 +28,7 @@ public class UserDto {
 
     @Builder
     public UserDto(User entity) {
-        this.email = entity.getEmail();
+        this.username = entity.getUsername();
         this.password = entity.getPassword();
         this.nickname = entity.getNickname();
     }
