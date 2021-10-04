@@ -9,19 +9,19 @@ import javax.validation.constraints.Size;
 
 @Getter
 @NoArgsConstructor
-public class LoginDto {
+public class LoginRequestDto {
 
     @NotNull
     @Size(min = 3, max = 50)
-    private String username;
+    private String email;
 
     @NotNull
     @Size(min = 7, max = 100)
     private String password;
 
     @Builder
-    public LoginDto(String username, String password) {
-        this.username = username;
+    public LoginRequestDto(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 }
