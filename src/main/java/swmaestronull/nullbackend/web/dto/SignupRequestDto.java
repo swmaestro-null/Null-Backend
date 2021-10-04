@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 @Getter
 @NoArgsConstructor
-public class UserDto {
+public class SignupRequestDto {
 
     @NotNull
     @Size(min = 3, max = 50)
@@ -30,7 +30,7 @@ public class UserDto {
     private String phoneNumber;
 
     @Builder
-    public UserDto(PaintUser entity) {
+    public SignupRequestDto(PaintUser entity) {
         this.email = entity.getEmail();
         this.password = entity.getPassword();
         this.name = entity.getName();
