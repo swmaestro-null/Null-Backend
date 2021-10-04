@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import swmaestronull.nullbackend.auth.JwtFilter;
 import swmaestronull.nullbackend.domain.user.PaintUser;
 import swmaestronull.nullbackend.service.UserService;
-import swmaestronull.nullbackend.web.dto.LoginRequestDto;
-import swmaestronull.nullbackend.web.dto.TokenDto;
-import swmaestronull.nullbackend.web.dto.SignupRequestDto;
+import swmaestronull.nullbackend.web.dto.*;
 
 import javax.validation.Valid;
 
@@ -30,8 +28,10 @@ public class UserController {
             @ApiResponse(code = 200, message = "회원가입 성공")
     })
     @PostMapping("/signup")
-    public ResponseEntity<PaintUser> signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
-        return ResponseEntity.ok(userService.signup(signupRequestDto));
+    public ResponseDto signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
+        PaintUser paintUser = userService.signup(signupRequestDto);
+        ResponseDto<SignupResponseDto> responseDto = new ResponseDto<>(0, new SignupResponseDto(paintUser), "signup success", true);
+        return responseDto;
     }
 
     @ApiOperation(value = "로그인", notes = "email과 password로 로그인을 진행합니다.")
@@ -39,12 +39,12 @@ public class UserController {
             @ApiResponse(code = 200, message = "로그인 성공")
     })
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<ResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
         String jwt = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+        ResponseDto<LoginResponseDto> responseDto = new ResponseDto<>(0, new LoginResponseDto(jwt), "login success", true);
+        return new ResponseEntity<>(responseDto, httpHeaders, HttpStatus.OK);
     }
 }
