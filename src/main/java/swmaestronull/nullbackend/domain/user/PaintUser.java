@@ -1,6 +1,5 @@
 package swmaestronull.nullbackend.domain.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,8 +29,11 @@ public class PaintUser implements UserDetails {
     private String password;
 
     @Column(length = 50)
-    private String nickname;
-    
+    private String name;
+
+    @Column(length = 50)
+    private String phoneNumber;
+
     @Column
     private boolean activated;
 
@@ -39,10 +41,11 @@ public class PaintUser implements UserDetails {
     private List<String> roles = new ArrayList<>();
 
     @Builder
-    public PaintUser(String email, String password, String nickname, boolean activated, List<String> roles) {
+    public PaintUser(String email, String password, String name, String phoneNumber, boolean activated, List<String> roles) {
         this.email = email;
         this.password = password;
-        this.nickname = nickname;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
         this.activated = activated;
         this.roles = roles;
     }
