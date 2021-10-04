@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class PaintUser implements UserDetails {
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,14 +26,12 @@ public class PaintUser implements UserDetails {
     @Column(length = 50, nullable = false, unique = true)
     private String email;
 
-    @JsonIgnore
     @Column(length = 100, nullable = false)
     private String password;
 
     @Column(length = 50)
     private String nickname;
-
-    @JsonIgnore
+    
     @Column
     private boolean activated;
 
