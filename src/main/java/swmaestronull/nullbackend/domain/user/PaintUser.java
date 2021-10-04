@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @NoArgsConstructor
-public class User implements UserDetails {
+public class PaintUser implements UserDetails {
 
     @JsonIgnore
     @Id
@@ -25,7 +25,7 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(length = 50, nullable = false, unique = true)
-    private String username;
+    private String email;
 
     @JsonIgnore
     @Column(length = 100, nullable = false)
@@ -42,8 +42,8 @@ public class User implements UserDetails {
     private List<String> roles = new ArrayList<>();
 
     @Builder
-    public User(String username, String password, String nickname, boolean activated, List<String> roles) {
-        this.username = username;
+    public PaintUser(String email, String password, String nickname, boolean activated, List<String> roles) {
+        this.email = email;
         this.password = password;
         this.nickname = nickname;
         this.activated = activated;
@@ -57,9 +57,8 @@ public class User implements UserDetails {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
