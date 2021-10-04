@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface PaintUserRepository extends JpaRepository<PaintUser, Long> {
 
-    Optional<PaintUser> findOneWithRoleByUsername(String username);
+    Optional<PaintUser> findOneWithRoleByEmail(String email);
 }
