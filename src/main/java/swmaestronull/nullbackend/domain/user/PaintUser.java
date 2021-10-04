@@ -1,6 +1,5 @@
 package swmaestronull.nullbackend.domain.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,24 +16,24 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @NoArgsConstructor
-public class User implements UserDetails {
+public class PaintUser implements UserDetails {
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 50, nullable = false, unique = true)
-    private String username;
+    private String email;
 
-    @JsonIgnore
     @Column(length = 100, nullable = false)
     private String password;
 
     @Column(length = 50)
-    private String nickname;
+    private String name;
 
-    @JsonIgnore
+    @Column(length = 50)
+    private String phoneNumber;
+
     @Column
     private boolean activated;
 
@@ -42,10 +41,11 @@ public class User implements UserDetails {
     private List<String> roles = new ArrayList<>();
 
     @Builder
-    public User(String username, String password, String nickname, boolean activated, List<String> roles) {
-        this.username = username;
+    public PaintUser(String email, String password, String name, String phoneNumber, boolean activated, List<String> roles) {
+        this.email = email;
         this.password = password;
-        this.nickname = nickname;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
         this.activated = activated;
         this.roles = roles;
     }
@@ -57,9 +57,8 @@ public class User implements UserDetails {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override

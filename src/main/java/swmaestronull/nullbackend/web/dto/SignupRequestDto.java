@@ -4,18 +4,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import swmaestronull.nullbackend.domain.user.User;
+import swmaestronull.nullbackend.domain.user.PaintUser;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
 @NoArgsConstructor
-public class UserDto {
+public class SignupRequestDto {
 
     @NotNull
     @Size(min = 3, max = 50)
-    private String username;
+    private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
@@ -23,13 +23,17 @@ public class UserDto {
     private String password;
 
     @NotNull
-    @Size(min = 3, max = 50)
-    private String nickname;
+    @Size(min = 2, max = 50)
+    private String name;
+
+    @NotNull
+    private String phoneNumber;
 
     @Builder
-    public UserDto(User entity) {
-        this.username = entity.getUsername();
+    public SignupRequestDto(PaintUser entity) {
+        this.email = entity.getEmail();
         this.password = entity.getPassword();
-        this.nickname = entity.getNickname();
+        this.name = entity.getName();
+        this.phoneNumber = entity.getPhoneNumber();
     }
 }

@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class TokenDto {
+public class LoginResponseDto {
 
     private String token;
 
     @Builder
-    public TokenDto(String token) {
+    public LoginResponseDto(String token) {
         this.token = token;
     }
 }
