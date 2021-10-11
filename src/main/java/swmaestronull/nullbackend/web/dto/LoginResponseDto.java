@@ -1,17 +1,24 @@
 package swmaestronull.nullbackend.web.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor
-public class LoginResponseDto {
+public class LoginResponseDto extends BaseResponseDto {
 
-    private String token;
+    private LoginResponseData data;
 
     @Builder
-    public LoginResponseDto(String token) {
-        this.token = token;
+    public LoginResponseDto(int code, String message, boolean success, String token) {
+        super(code, message, success);
+        this.data = new LoginResponseData(token);
+    }
+
+    @Data
+    @AllArgsConstructor
+    @JsonFormat(shape = JsonFormat.Shape.OBJECT)
+    static class LoginResponseData {
+        private String token;
     }
 }
