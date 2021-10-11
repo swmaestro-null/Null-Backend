@@ -28,10 +28,15 @@ public class UserController {
             @ApiResponse(code = 200, message = "회원가입 성공")
     })
     @PostMapping("/signup")
-    public ResponseDto signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
+    public SignupResponseDto signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
         PaintUser paintUser = userService.signup(signupRequestDto);
-        ResponseDto<SignupResponseDto> responseDto = new ResponseDto<>(0, new SignupResponseDto(paintUser), "signup success", true);
-        return responseDto;
+        SignupResponseDto signupResponseDto = SignupResponseDto.builder()
+                .code(0)
+                .message("signup success")
+                .success(true)
+                .entity(paintUser)
+                .build();
+        return signupResponseDto;
     }
 
     @ApiOperation(value = "로그인", notes = "email과 password로 로그인을 진행합니다.")
@@ -39,12 +44,17 @@ public class UserController {
             @ApiResponse(code = 200, message = "로그인 성공")
     })
     @PostMapping("/login")
-    public ResponseEntity<ResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
         String jwt = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-        ResponseDto<LoginResponseDto> responseDto = new ResponseDto<>(0, new LoginResponseDto(jwt), "login success", true);
-        return new ResponseEntity<>(responseDto, httpHeaders, HttpStatus.OK);
+        LoginResponseDto loginResponseDto = LoginResponseDto.builder()
+                .code(0)
+                .message("login success")
+                .token(jwt)
+                .success(true)
+                .build();
+        return new ResponseEntity<>(loginResponseDto, httpHeaders, HttpStatus.OK);
     }
 }
