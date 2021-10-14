@@ -9,19 +9,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swmaestronull.nullbackend.auth.JwtFilter;
 import swmaestronull.nullbackend.domain.user.PaintUser;
+import swmaestronull.nullbackend.service.EmailService;
 import swmaestronull.nullbackend.service.UserService;
 import swmaestronull.nullbackend.web.dto.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequestMapping("/api/v1/user")
 @CrossOrigin(origins = "*")
 public class UserController {
-    private final UserService userService;
 
-    public UserController(UserService userService) {
+    private final UserService userService;
+    private final EmailService emailService;
+
+    public UserController(UserService userService, EmailService emailService) {
         this.userService = userService;
+        this.emailService = emailService;
     }
 
     @ApiOperation(value = "회원가입", notes = "회원가입을 진행합니다.")
@@ -58,5 +64,16 @@ public class UserController {
                 .success(true)
                 .build();
         return new ResponseEntity<>(loginResponseDto, httpHeaders, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "이메일 인증", notes = "email에 인증 코드를 전송합니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "인증 코드 전송 성공")
+    })
+    @PostMapping("/sendCode")
+    public BaseResponseDto sendCode(@RequestBody SendCodeRequestDto sendCodeRequestDto) throws UnsupportedEncodingException, MessagingException {
+        emailService.sendMessage(sendCodeRequestDto.getEmail());
+        BaseResponseDto responseDto = new BaseResponseDto(0, "success to send verify code", true);
+        return responseDto;
     }
 }
