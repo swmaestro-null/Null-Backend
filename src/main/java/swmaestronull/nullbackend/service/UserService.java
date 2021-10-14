@@ -39,6 +39,7 @@ public class UserService {
                 .email(signupRequestDto.getEmail())
                 .password(passwordEncoder.encode(signupRequestDto.getPassword()))
                 .name(signupRequestDto.getName())
+                .phoneNumber(signupRequestDto.getPhoneNumber())
                 .roles(Collections.singletonList("ROLE_USER"))
                 .activated(true)
                 .build();
@@ -52,5 +53,12 @@ public class UserService {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return tokenProvider.createToken(authentication);
+    }
+
+    @Transactional
+    public PaintUser findByEmail(String email) {
+        PaintUser paintUser = paintUserRepository.findOneWithRoleByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("[email:" + email + "] 해당 유저가 없습니다."));
+        return paintUser;
     }
 }

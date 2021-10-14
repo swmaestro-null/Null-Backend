@@ -47,13 +47,14 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
         String jwt = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
-
+        PaintUser paintUser = userService.findByEmail(loginRequestDto.getEmail());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
         LoginResponseDto loginResponseDto = LoginResponseDto.builder()
                 .code(0)
                 .message("login success")
                 .token(jwt)
+                .paintUser(paintUser)
                 .success(true)
                 .build();
         return new ResponseEntity<>(loginResponseDto, httpHeaders, HttpStatus.OK);
