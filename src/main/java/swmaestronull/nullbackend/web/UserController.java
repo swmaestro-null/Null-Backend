@@ -40,7 +40,7 @@ public class UserController {
         PaintUser paintUser = userService.signup(signupRequestDto);
         SignupResponseDto signupResponseDto = SignupResponseDto.builder()
                 .code(0)
-                .message("signup success")
+                .message("회원가입에 성공했습니다.")
                 .success(true)
                 .entity(paintUser)
                 .build();
@@ -60,7 +60,7 @@ public class UserController {
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
         LoginResponseDto loginResponseDto = LoginResponseDto.builder()
                 .code(0)
-                .message("login success")
+                .message("로그인에 성공했습니다.")
                 .token(jwt)
                 .paintUser(paintUser)
                 .success(true)

@@ -37,7 +37,7 @@ public class PaintController {
         return UploadFileResponseDto.builder()
                 .code(0)
                 .url(url)
-                .message("success to upload")
+                .message("이미지 업로드에 성공했습니다.")
                 .success(true)
                 .build();
     }
