@@ -36,6 +36,7 @@ public class UserController {
     })
     @PostMapping("/signup")
     public SignupResponseDto signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
+        // Todo: Service로 로직 옮기기
         PaintUser paintUser = userService.signup(signupRequestDto);
         SignupResponseDto signupResponseDto = SignupResponseDto.builder()
                 .code(0)
@@ -52,6 +53,7 @@ public class UserController {
     })
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+        // Todo: valid 체크, Service로 로직 옮기기
         String jwt = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
         PaintUser paintUser = userService.findByEmail(loginRequestDto.getEmail());
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -72,8 +74,9 @@ public class UserController {
     })
     @PostMapping("/sendCode")
     public BaseResponseDto sendCode(@RequestBody SendCodeRequestDto sendCodeRequestDto) throws UnsupportedEncodingException, MessagingException {
-        emailService.sendMessage(sendCodeRequestDto.getEmail());
-        BaseResponseDto responseDto = new BaseResponseDto(0, "success to send verify code", true);
+        BaseResponseDto responseDto = emailService.sendMessage(sendCodeRequestDto.getEmail());
         return responseDto;
     }
+
+    
 }
