@@ -36,10 +36,11 @@ public class UserController {
     })
     @PostMapping("/signup")
     public SignupResponseDto signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
+        // Todo: Service로 로직 옮기기
         PaintUser paintUser = userService.signup(signupRequestDto);
         SignupResponseDto signupResponseDto = SignupResponseDto.builder()
                 .code(0)
-                .message("signup success")
+                .message("회원가입에 성공했습니다.")
                 .success(true)
                 .entity(paintUser)
                 .build();
@@ -52,13 +53,14 @@ public class UserController {
     })
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+        // Todo: valid 체크, Service로 로직 옮기기
         String jwt = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
         PaintUser paintUser = userService.findByEmail(loginRequestDto.getEmail());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
         LoginResponseDto loginResponseDto = LoginResponseDto.builder()
                 .code(0)
-                .message("login success")
+                .message("로그인에 성공했습니다.")
                 .token(jwt)
                 .paintUser(paintUser)
                 .success(true)
@@ -66,14 +68,23 @@ public class UserController {
         return new ResponseEntity<>(loginResponseDto, httpHeaders, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "이메일 인증", notes = "email에 인증 코드를 전송합니다.")
+    @ApiOperation(value = "이메일 인증", notes = "이메일에 인증 코드를 전송합니다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "인증 코드 전송 성공")
     })
     @PostMapping("/sendCode")
     public BaseResponseDto sendCode(@RequestBody SendCodeRequestDto sendCodeRequestDto) throws UnsupportedEncodingException, MessagingException {
-        emailService.sendMessage(sendCodeRequestDto.getEmail());
-        BaseResponseDto responseDto = new BaseResponseDto(0, "success to send verify code", true);
+        BaseResponseDto responseDto = emailService.sendMessage(sendCodeRequestDto.getEmail());
+        return responseDto;
+    }
+
+    @ApiOperation(value = "이메일 인증 코드 확인", notes = "이메일 인증 코드를 확인합니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "인증 코드 확인 성공")
+    })
+    @PostMapping("/checkCode")
+    public BaseResponseDto checkCode(@RequestBody CheckCodeRequestDto checkCodeRequestDto){
+        BaseResponseDto responseDto = emailService.checkCode(checkCodeRequestDto.getEmail(), checkCodeRequestDto.getCode());
         return responseDto;
     }
 }
