@@ -30,7 +30,7 @@ public class EmailService {
         // Todo: Test code 작성하기
         // 이미 가입한 이메일인지 체크
         if (paintUserRepository.findOneWithRoleByEmail(receiver).orElse(null) != null) {
-            return new BaseResponseDto(1, "thise email already has an account", false);
+            return new BaseResponseDto(1, "이 이메일은 이미 계정이 있습니다.", false);
         }
         String code = createCode();
         EmailCode emailCode = emailCodeRepository.findByEmail(receiver).orElse(null);
@@ -49,7 +49,7 @@ public class EmailService {
             e.printStackTrace();
             throw new IllegalArgumentException();
         }
-        return new BaseResponseDto(0, "success to send verify code", true);
+        return new BaseResponseDto(0, "성공적으로 인증 코드를 보냈습니다.", true);
     }
 
     private MimeMessage createMessage(String receiver, String code) throws MessagingException, UnsupportedEncodingException {
@@ -82,5 +82,20 @@ public class EmailService {
             }
         }
         return key.toString();
+    }
+
+    public BaseResponseDto checkCode(String receiver, String code) {
+        EmailCode emailCode = emailCodeRepository.findByEmail(receiver)
+                .orElseThrow(() -> new IllegalArgumentException("[email:" + receiver + "] code를 발송하지 않은 이메일입니다."));
+        // 유효시간 판별
+        if (!emailCode.isValid()) {
+            return new BaseResponseDto(1, "인증 코드가 유효시간을 초과했습니다.", false);
+        }
+        // code 일치여부 판별
+        if (!emailCode.checkCode(code)) {
+            return new BaseResponseDto(1, "인증 코드가 일치하지 않습니다.", false);
+        } else {
+            return new BaseResponseDto(0, "인증 코드가 일치합니다.", true);
+        }
     }
 }

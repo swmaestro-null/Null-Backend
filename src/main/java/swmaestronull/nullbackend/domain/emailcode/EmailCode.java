@@ -5,10 +5,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @NoArgsConstructor
 public class EmailCode {
+
+    private static final int validMinutes = 3;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,5 +40,14 @@ public class EmailCode {
     public void updateCode(String code) {
         this.code = code;
         this.createdCodeTime = LocalDateTime.now();
+    }
+
+    public boolean checkCode(String code) {
+        return this.code.equals(code);
+    }
+
+    public boolean isValid() {
+        long diff = ChronoUnit.MINUTES.between(this.createdCodeTime, LocalDateTime.now());
+        return diff < validMinutes;
     }
 }

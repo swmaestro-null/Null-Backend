@@ -68,7 +68,7 @@ public class UserController {
         return new ResponseEntity<>(loginResponseDto, httpHeaders, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "이메일 인증", notes = "email에 인증 코드를 전송합니다.")
+    @ApiOperation(value = "이메일 인증", notes = "이메일에 인증 코드를 전송합니다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "인증 코드 전송 성공")
     })
@@ -78,5 +78,13 @@ public class UserController {
         return responseDto;
     }
 
-    
+    @ApiOperation(value = "이메일 인증 코드 확인", notes = "이메일 인증 코드를 확인합니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "인증 코드 확인 성공")
+    })
+    @PostMapping("/checkCode")
+    public BaseResponseDto checkCode(@RequestBody CheckCodeRequestDto checkCodeRequestDto){
+        BaseResponseDto responseDto = emailService.checkCode(checkCodeRequestDto.getEmail(), checkCodeRequestDto.getCode());
+        return responseDto;
+    }
 }
