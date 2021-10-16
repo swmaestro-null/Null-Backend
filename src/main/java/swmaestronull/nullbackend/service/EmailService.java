@@ -5,6 +5,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import swmaestronull.nullbackend.domain.emailcode.EmailCode;
 import swmaestronull.nullbackend.domain.emailcode.EmailCodeRepository;
 import swmaestronull.nullbackend.domain.user.PaintUserRepository;
@@ -26,6 +27,7 @@ public class EmailService {
     private final PaintUserRepository paintUserRepository;
     private final EmailCodeRepository emailCodeRepository;
 
+    @Transactional
     public BaseResponseDto sendMessage(String receiver) throws MessagingException, UnsupportedEncodingException {
         // Todo: Test code 작성하기
         // 이미 가입한 이메일인지 체크
@@ -84,6 +86,7 @@ public class EmailService {
         return key.toString();
     }
 
+    @Transactional
     public BaseResponseDto checkCode(String receiver, String code) {
         EmailCode emailCode = emailCodeRepository.findByEmail(receiver)
                 .orElseThrow(() -> new IllegalArgumentException("[email:" + receiver + "] code를 발송하지 않은 이메일입니다."));

@@ -39,11 +39,13 @@ public class EmailCode {
 
     public void updateCode(String code) {
         this.code = code;
+        this.isChecked = false;
         this.createdCodeTime = LocalDateTime.now();
     }
 
     public boolean checkCode(String code) {
-        return this.code.equals(code);
+        this.isChecked = this.code.equals(code);
+        return this.isChecked;
     }
 
     public boolean isValid() {
