@@ -19,7 +19,6 @@ import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequestMapping("/api/v1/user")
-@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserService userService;

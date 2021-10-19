@@ -97,8 +97,7 @@ public class EmailService {
         // code 일치여부 판별
         if (!emailCode.checkCode(code)) {
             return new BaseResponseDto(1, "인증 코드가 일치하지 않습니다.", false);
-        } else {
-            return new BaseResponseDto(0, "인증 코드가 일치합니다.", true);
         }
+        return new BaseResponseDto(0, "인증 코드가 일치합니다.", true);
     }
 }
