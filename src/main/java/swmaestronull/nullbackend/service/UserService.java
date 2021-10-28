@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import swmaestronull.nullbackend.auth.TokenProvider;
 import swmaestronull.nullbackend.domain.user.PaintUser;
 import swmaestronull.nullbackend.domain.user.PaintUserRepository;
-import swmaestronull.nullbackend.web.dto.SignupRequestDto;
+import swmaestronull.nullbackend.web.dto.*;
 import swmaestronull.nullbackend.web.exception.DuplicateMemberException;
 
 import java.util.Collections;
@@ -30,11 +30,10 @@ public class UserService {
     }
 
     @Transactional
-    public PaintUser signup(SignupRequestDto signupRequestDto) {
+    public SignupResponseDto signup(SignupRequestDto signupRequestDto) {
         if (paintUserRepository.findOneWithRoleByEmail(signupRequestDto.getEmail()).orElse(null) != null) {
             throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
         }
-
         PaintUser paintUser = PaintUser.builder()
                 .email(signupRequestDto.getEmail())
                 .password(passwordEncoder.encode(signupRequestDto.getPassword()))
@@ -43,8 +42,13 @@ public class UserService {
                 .roles(Collections.singletonList("ROLE_USER"))
                 .activated(true)
                 .build();
-
-        return paintUserRepository.save(paintUser);
+        paintUserRepository.save(paintUser);
+        return SignupResponseDto.builder()
+                .code(0)
+                .message("회원가입에 성공했습니다.")
+                .success(true)
+                .entity(paintUser)
+                .build();
     }
 
     public String login(String email, String password) {
@@ -60,5 +64,16 @@ public class UserService {
         PaintUser paintUser = paintUserRepository.findOneWithRoleByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("[email:" + email + "] 해당 유저가 없습니다."));
         return paintUser;
+    }
+
+    @Transactional
+    public BaseResponseDto update(UserUpdateRequestDto userUpdateRequestDto) {
+        PaintUser paintUser = findByEmail(userUpdateRequestDto.getEmail());
+        String password = userUpdateRequestDto.getPassword() == null ? null : passwordEncoder.encode(userUpdateRequestDto.getPassword());
+        paintUser.update(
+                password,
+                userUpdateRequestDto.getName(),
+                userUpdateRequestDto.getPhoneNumber());
+        return new BaseResponseDto(0, "회원정보를 수정했습니다.", true);
     }
 }
