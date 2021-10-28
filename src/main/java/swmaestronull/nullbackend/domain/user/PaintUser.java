@@ -80,4 +80,16 @@ public class PaintUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void update(String password, String name, String phoneNumber) {
+        if (password != null) {
+            this.password = password;
+        }
+        if (name != null) {
+            this.name = name;
+        }
+        if (phoneNumber != null) {
+            this.phoneNumber = phoneNumber;
+        }
+    }
 }
