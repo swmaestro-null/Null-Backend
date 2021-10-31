@@ -30,9 +30,13 @@ public class PaintController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "업로드 성공")
     })
-    @PostMapping("/upload")
-    public UploadFileResponseDto uploadFile(@RequestParam MultipartFile image) throws IOException {
-        String url = s3Uploader.upload(image, "static");
+    @PostMapping("/upload/{imageType}/{email}")
+    public UploadFileResponseDto uploadFile(
+            @PathVariable String imageType,
+            @PathVariable String email,
+            @RequestParam MultipartFile image) throws IOException {
+        String dirName = "static" + "/" + email + "/" + imageType;
+        String url = s3Uploader.upload(image, dirName);
         log.info("upload url=" + url);
         return UploadFileResponseDto.builder()
                 .code(0)
