@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@PropertySource("classpath:application-dev.properties")
+@PropertySource("classpath:application-aws.properties")
 public class PaintService {
 
     private final ObjectMapper objectMapper;
