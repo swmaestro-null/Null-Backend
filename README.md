@@ -14,7 +14,7 @@ Spring boot, Spring Data JPA, MariaDB, EC2, RDS, S3
 
 ## 아키텍쳐도
 
-![image](https://user-images.githubusercontent.com/52124204/138157502-2bb35f44-9691-4952-895e-499da577d861.png)
+![image](https://user-images.githubusercontent.com/52124204/140560478-4b907c2d-3f8d-4d2d-a75d-e64685d3831f.png)
 
 ## API
 
@@ -27,5 +27,6 @@ User Controller
 
 Painter Controller
 
-- `/painter/upload` 이미지 업로드
-- `/painter/paint` 이미지 자동채색(구현 중)
+- `/painter/upload/{imageType}/{email}` 이미지 업로드
+- `/painter/reference` Based on reference 밑색 자동채색
+
