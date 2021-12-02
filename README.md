@@ -14,7 +14,7 @@ Spring boot, Spring Data JPA, MariaDB, EC2, RDS, S3
 
 ## 아키텍쳐도
 
-![image](https://user-images.githubusercontent.com/52124204/140560478-4b907c2d-3f8d-4d2d-a75d-e64685d3831f.png)
+![image](https://user-images.githubusercontent.com/52124204/144434208-9529d69d-0045-4d04-a2b0-e73320fdb326.png)
 
 ## API
 
